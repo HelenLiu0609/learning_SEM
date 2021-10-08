@@ -1,0 +1,3 @@
+"0","library(lavaan)"
+"0","data(PoliticalDemocracy, package = ""lavaan"")"
+"0","head(PoliticalDemocracy)"

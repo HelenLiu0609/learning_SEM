@@ -1,0 +1,3 @@
+"0","library(lavaan)"
+"0","data(HolzingerSwineford1939, package = ""lavaan"")"
+"0","head(HolzingerSwineford1939)"

@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r import data & package}
+library(lavaan)
+data(HolzingerSwineford1939, package = "lavaan")
+head(HolzingerSwineford1939)
+```
+```{r structure model}
+HS.model <- "visual =~ x1 + x2 + x3 # construct model
+               textual =~ x4 + x5 + x6
+               speed =~ x7 + x8 + x9"
+fit <- cfa(HS.model, data = HolzingerSwineford1939) #设置参数
+parTable(fit)
+summary(fit, fit.measures = TRUE)
+```
+```{r SEM practice}
+library(lavaan)
+data(PoliticalDemocracy, package = "lavaan")
+head(PoliticalDemocracy)
+```
+```{r model construction}
+model <- "# measurement model
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + y2 + y3 + y4
+     dem65 =~ y5 + y6 + y7 + y8
+     # regressions
+     dem60 ~ ind60
+     dem65 ~ ind60 + dem60
+     # residual covariances
+     y1 ~~ y5
+     y2 ~~ y4 + y6
+     y3 ~~ y7
+     y4 ~~ y8
+     y6 ~~ y8"
+fit <- sem(model, data = PoliticalDemocracy)
+summary(fit, standardized = TRUE)
+coef(fit) #返回自由参数估计值及标签
+inspect(fit) #模型内部的LISREL矩阵表示  
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
